@@ -1,0 +1,68 @@
+delta = {"1a":'2'
+        ,"2a":'1'
+        ,"3a":'2'
+        ,"4a":'3'
+        ,"5a":'6'
+        ,"6a":'8'
+        ,"7a":'6'
+        ,"8a":'4'
+        ,"9a":'7'
+        ,"1b":'2'
+        ,"2b":'4'
+        ,"3b":'2'
+        ,"4b":'2'
+        ,"5b":'5'
+        ,"6b":'9'
+        ,"7b":'2'
+        ,"8b":'4'
+        ,"9b":'9'
+        ,"1c":'5'
+        ,"2c":'4'
+        ,"3c":'5'
+        ,"4c":'2'
+        ,"5c":'3'
+        ,"6c":'6'
+        ,"7c":'8'
+        ,"8c":'7'
+        ,"9c":'7'
+        }
+
+omega = {"1a":'1'
+        ,"2a":'0'
+        ,"3a":'1'
+        ,"4a":'0'
+        ,"5a":'1'
+        ,"6a":'0'
+        ,"7a":'1'
+        ,"8a":'1'
+        ,"9a":'0'
+        ,"1b":'0'
+        ,"2b":'1'
+        ,"3b":'0'
+        ,"4b":'1'
+        ,"5b":'0'
+        ,"6b":'1'
+        ,"7b":'0'
+        ,"8b":'0'
+        ,"9b":'1'
+        ,"1c":'0'
+        ,"2c":'1'
+        ,"3c":'0'
+        ,"4c":'1'
+        ,"5c":'0'
+        ,"6c":'1'
+        ,"7c":'0'
+        ,"8c":'0'
+        ,"9c":'1'
+        } 
+
+def result(state,word):
+        end_result=[]
+        for i in word:
+                key=str(state+i)
+                #print("I=",i," state=",state," end_result =",end_result," key =",key)
+                currrent_data = omega[key]
+                end_result.append(currrent_data)
+                state = delta[key]
+        print("state =",state,'\n',"end_result =",end_result)
+result("1","abba")
