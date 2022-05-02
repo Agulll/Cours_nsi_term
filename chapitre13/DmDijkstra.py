@@ -29,12 +29,43 @@ class Graph:
         return(str(self.grapdico))
 
 
-abc1 = Graph(1,['a','b','c'],[('a','b',2),('c','a',7),('b','c',25)])
-abc2 = Graph(2,['a','b','c'],{'a':[('b',2),('c',7)], 'b':[('a',2),('c',25)],'c':[('a',7),('b',25)]})
-abc3 = Graph(3,['a','b','c'],[[0,2,7],[2,0,25],[7,25,0]])
+# EXEMPLE
+
+# abc1 = Graph(1,['a','b','c'],[('a','b',2),('c','a',7),('b','c',25)])
+# abc2 = Graph(2,['a','b','c'],{'a':[('b',2),('c',7)], 'b':[('a',2),('c',25)],'c':[('a',7),('b',25)]})
+# abc3 = Graph(3,['a','b','c'],[[0,2,7],[2,0,25],[7,25,0]])
 
 
-print(abc1,"Grap 1")
-print(abc2,"Grap 2")
-print(abc3,"Grap 3")
-print(abc1==abc2==abc3, " <- ?")
+# print(abc1,"Grap 1")
+# print(abc2,"Grap 2")
+# print(abc3,"Grap 3")
+# print(abc1==abc2==abc3)
+
+# FIN DE L'EXEMPLE
+
+if __name__ == "__main__":
+    import csv 
+    f = open("chapitre13\_routes.csv","r")
+    reader = csv.reader(f)
+    data = []
+    for row in reader:
+        data.append(row[0].split(';'))
+    villes = data[0][1:]
+    print(villes)
+    strbuffer = ""
+    for i in villes[:-2]:
+        strbuffer+=i+", "
+    strbuffer+=villes[-2] + " et " + villes[-1] + '.'
+    print("Imagions la situation suviante :")
+    print("Une apocalypse majeure c'est produite, uniquement les viles majeures de France sont fonctionlles :")
+    print(strbuffer)
+    start = str(input("Vous habitez à ? -> "))
+    end = str(input("Et vous voulez rejoinde un•e proche qui habite à ? -> "))
+    maxrange = int(input("Votre voiture peut faire un nombre limité de kilomètres ->"))
+    databuffer = []
+    print(data)
+    for i in range(1,len(data)):
+        for j in range(1,len(data[i])):
+            if int(data[i][j]) < maxrange and data[i][j] != '0': 
+                databuffer.append((data[i][0],data[0][j],int(data[i][j])))
+    print(databuffer)
