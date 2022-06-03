@@ -1,6 +1,4 @@
-from posixpath import split
 from random import choice,randint
-import re
 
 #TODO :: tkinter / affichage
 
@@ -105,35 +103,28 @@ class Laby:
                     self.doublearray[i][j] = v1
 
 
-    def Backtrack(self,x=0,y=0):
+    def Backtrack(self,x=0,y=0,openlist = None):
         '''int,int->None'''
-        buffer=[str(x)+'|'+str(y)]
-        openlist = self.labygraph.getvertices()
-        while len(buffer) != 0:
-            r=[]
-            if y > 1 : r.append((x,y-1))
-            if x < self.width-1 : r.append((x+1,y))
-            if y < self.height-1 : r.append((x,y+1))
-            if x > 1 : r.append((x-1,y))
-            print(r)
-            for i in list(r):
-                if str(i[0])+'|'+str(i[1]) not in openlist:
-                    r.remove(i)
-            print(r)
-            print(buffer)
-            print(openlist)
-            if len(r) == 0:
-                [x,y] = buffer.pop().split('|')
-                x = int(x)
-                y = int(y)
-                print("BACKING OFF")
-            else:
-                r = choice(r)
-                self.labygraph.addarc(buffer[-1],str(r[0])+'|'+str(r[1]),1)
-                openlist.remove(buffer[-1])
-                buffer.append(str(r[0])+'|'+str(r[1]))
-                x,y=r
-            
+        if openlist == None:
+            openlist = self.labygraph.getvertices()
+        openlist.remove(str(x)+'|'+str(y))
+        possible_moves = []
+        if y > 1                and     (str(x)+'|'+str(y-1)    not in openlist : 
+            possible_moves.append(      (str(x)+'|'+str(y-1))   )
+        if x < self.width-1     and     (str(x+1)+'|'+str(y))   not in openlist : 
+            possible_moves.append(      (str(x+1)+'|'+str(y))   )
+        if y < self.height-1    and     (str(x)+'|'+str(y+1))   not in openlist : 
+            possible_moves.append(      (str(x)+'|'+str(y+1))   )
+        if x > 1                and     (str(x-1)+'|'+str(y))   not in openlist : 
+            possible_moves.append(      (str(x-1)+'|'+str(y))   )
+
+        while(len(possible_moves) > 0):
+            move = choice(possible_moves)
+            possible_moves.remove(move)
+            self.labygraph.addarc(str(x)+'|'+str(y),move,1)
+            [newx,newy] = move.split('|')
+            self.Backtrack(int(newx),int(newy),openlist)
+        return()
 
     def __repr__(self):
         return(str(self.doublearray))
@@ -145,5 +136,5 @@ labo2 = labo1
 # print(labo1)
 # print(labo2)
 labo1.Kruskal()
-labo2.Backtrack()
-print(labo1)
+labo2.Backtrack(2,2)
+# print(labo1)
